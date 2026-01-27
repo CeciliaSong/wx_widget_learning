@@ -34,9 +34,10 @@ enum
 MyFrame::MyFrame()
     : wxFrame(NULL, wxID_ANY, "Hello World - wxWidgets First Program") 
     {
-    
-    CentreOnScreen(wxBOTH);
+    SetPosition(wxPoint(500, 0));
     SetSize(wxSize(450, 350));
+
+    
     
     
     wxMenu* menuFile = new wxMenu;

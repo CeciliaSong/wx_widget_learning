@@ -52,7 +52,8 @@ bool MyApp::OnInit() {
 }
 
 MyFrame::MyFrame()
-    : wxFrame(NULL, wxID_ANY, "基础控件示例", wxDefaultPosition, wxSize(500, 600)) {
+    : wxFrame(NULL, wxID_ANY, "Basic Controls Example", wxDefaultPosition, wxSize(500, 600)) 
+    {
     
     // 创建主面板
     wxPanel* panel = new wxPanel(this);
@@ -61,14 +62,14 @@ MyFrame::MyFrame()
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     
     // ==================== 文本框 ====================
-    wxStaticText* labelName = new wxStaticText(panel, wxID_ANY, "姓名:");
+    wxStaticText* labelName = new wxStaticText(panel, wxID_ANY, "Name:");
     m_textName = new wxTextCtrl(panel, wxID_ANY, "");
     
     mainSizer->Add(labelName, 0, wxALL, 5);
     mainSizer->Add(m_textName, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 5);
     
     // ==================== 多行文本框 ====================
-    wxStaticText* labelBio = new wxStaticText(panel, wxID_ANY, "个人简介:");
+    wxStaticText* labelBio = new wxStaticText(panel, wxID_ANY, "Self-introduction:");
     m_textMultiline = new wxTextCtrl(panel, wxID_ANY, "",
                                      wxDefaultPosition, wxSize(-1, 80),
                                      wxTE_MULTILINE);
@@ -76,42 +77,46 @@ MyFrame::MyFrame()
     mainSizer->Add(labelBio, 0, wxALL, 5);
     mainSizer->Add(m_textMultiline, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 5);
     
-    // ==================== 复选框 ====================
-    m_checkSubscribe = new wxCheckBox(panel, wxID_ANY, "订阅新闻通讯");
+    m_checkSubscribe = new wxCheckBox(panel, wxID_ANY, "Participate in Exchange Program");
     mainSizer->Add(m_checkSubscribe, 0, wxALL, 5);
     
     // ==================== 单选按钮 ====================
-    wxStaticText* labelGender = new wxStaticText(panel, wxID_ANY, "性别:");
+    wxStaticText* labelGender = new wxStaticText(panel, wxID_ANY, "Gender:");
     mainSizer->Add(labelGender, 0, wxALL, 5);
     
     wxBoxSizer* genderSizer = new wxBoxSizer(wxHORIZONTAL);
-    m_radioMale = new wxRadioButton(panel, wxID_ANY, "男",
+    m_radioMale = new wxRadioButton(panel, wxID_ANY, "Male",
                                     wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-    m_radioFemale = new wxRadioButton(panel, wxID_ANY, "女");
+    m_radioFemale = new wxRadioButton(panel, wxID_ANY, "Female");
     
     genderSizer->Add(m_radioMale, 0, wxALL, 5);
     genderSizer->Add(m_radioFemale, 0, wxALL, 5);
     mainSizer->Add(genderSizer, 0, wxLEFT, 5);
     
     // ==================== 下拉框 ====================
-    wxStaticText* labelCity = new wxStaticText(panel, wxID_ANY, "城市:");
+    wxStaticText* labelCity = new wxStaticText(panel, wxID_ANY, "Major:");
     mainSizer->Add(labelCity, 0, wxALL, 5);
     
     wxArrayString cities;
-    cities.Add("北京");
-    cities.Add("上海");
-    cities.Add("广州");
-    cities.Add("深圳");
-    cities.Add("杭州");
+    cities.Add("Aerospace Engineering");
+    cities.Add("Architectural Environment Engineering");
+    cities.Add("Architecture");
+    cities.Add("Chemical Engineering");
+    cities.Add("Chemistry");
+    cities.Add("Civil Engineering");
+    cities.Add("Computer Science");
+    cities.Add("Electrical and Electronic Engineering");
+    cities.Add("Environmental Engineering");
+    cities.Add("Mechanical Engineering");
     
     m_choiceCity = new wxChoice(panel, wxID_ANY, wxDefaultPosition,
                                wxDefaultSize, cities);
-    m_choiceCity->SetSelection(0);  // 默认选择第一项
+    m_choiceCity->SetSelection(7);  // 默认选择第一项
     
-    mainSizer->Add(m_choiceCity, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 5);
+    mainSizer->Add(m_choiceCity, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 10);
     
     // ==================== 滑块 ====================
-    wxStaticText* labelAge = new wxStaticText(panel, wxID_ANY, "年龄:");
+    wxStaticText* labelAge = new wxStaticText(panel, wxID_ANY, "Age:");
     mainSizer->Add(labelAge, 0, wxALL, 5);
     
     wxBoxSizer* ageSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -121,14 +126,14 @@ MyFrame::MyFrame()
     
     ageSizer->Add(m_sliderAge, 1, wxALL | wxEXPAND, 5);
     ageSizer->Add(m_labelAgeValue, 0, wxALL | wxALIGN_CENTER_VERTICAL, 5);
-    mainSizer->Add(ageSizer, 0, wxEXPAND);
+    mainSizer->Add(ageSizer, 0, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM, 10);
     
     // ==================== 按钮 ====================
     mainSizer->AddSpacer(20);  // 添加间隔
     
     wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    wxButton* btnSubmit = new wxButton(panel, wxID_ANY, "提交");
-    wxButton* btnClear = new wxButton(panel, wxID_ANY, "清空");
+    wxButton* btnSubmit = new wxButton(panel, wxID_ANY, "Submit");
+    wxButton* btnClear = new wxButton(panel, wxID_ANY, "Clear");
     
     buttonSizer->Add(btnSubmit, 0, wxALL, 5);
     buttonSizer->Add(btnClear, 0, wxALL, 5);
@@ -149,7 +154,7 @@ MyFrame::MyFrame()
     
     // 创建状态栏
     CreateStatusBar();
-    SetStatusText("请填写表单");
+    SetStatusText("Please fill the form");
     
     Centre();
 }
@@ -164,71 +169,78 @@ void MyFrame::OnButtonClick(wxCommandEvent& event) {
     m_sliderAge->SetValue(25);
     m_labelAgeValue->SetLabel("25");
     
-    SetStatusText("表单已清空");
+    SetStatusText("Form cleared");
 }
 
-void MyFrame::OnTextChanged(wxCommandEvent& event) {
+void MyFrame::OnTextChanged(wxCommandEvent& event) 
+{
     wxString name = m_textName->GetValue();
     if (!name.IsEmpty()) {
-        SetStatusText("姓名: " + name);
+        SetStatusText("Name: " + name);
     } else {
-        SetStatusText("请输入姓名");
+        SetStatusText("Please enter name");
     }
 }
 
-void MyFrame::OnCheckBox(wxCommandEvent& event) {
+void MyFrame::OnCheckBox(wxCommandEvent& event) 
+{
     if (m_checkSubscribe->GetValue()) {
-        SetStatusText("已订阅新闻通讯");
+        SetStatusText("Participate in Exchange Program");
     } else {
-        SetStatusText("已取消订阅");
+        SetStatusText("4+0 Program");
     }
 }
 
-void MyFrame::OnRadioButton(wxCommandEvent& event) {
-    wxString gender = m_radioMale->GetValue() ? "男" : "女";
-    SetStatusText("性别: " + gender);
+void MyFrame::OnRadioButton(wxCommandEvent& event) 
+{
+    wxString gender = m_radioMale->GetValue() ? "Male" : "Female";
+    SetStatusText("Gender: " + gender);
 }
 
-void MyFrame::OnChoiceSelected(wxCommandEvent& event) {
+void MyFrame::OnChoiceSelected(wxCommandEvent& event) 
+{
     wxString city = m_choiceCity->GetStringSelection();
-    SetStatusText("城市: " + city);
+    SetStatusText("City: " + city);
 }
 
-void MyFrame::OnSlider(wxCommandEvent& event) {
+void MyFrame::OnSlider(wxCommandEvent& event) 
+{
     int age = m_sliderAge->GetValue();
     m_labelAgeValue->SetLabel(wxString::Format("%d", age));
-    SetStatusText(wxString::Format("年龄: %d", age));
+    SetStatusText(wxString::Format("Age: %d", age));
 }
 
-void MyFrame::OnSubmit(wxCommandEvent& event) {
+void MyFrame::OnSubmit(wxCommandEvent& event) 
+{
     // 收集所有表单数据
     wxString name = m_textName->GetValue();
     wxString bio = m_textMultiline->GetValue();
     bool subscribe = m_checkSubscribe->GetValue();
-    wxString gender = m_radioMale->GetValue() ? "男" : "女";
+    wxString gender = m_radioMale->GetValue() ? "Male" : "Female";
     wxString city = m_choiceCity->GetStringSelection();
     int age = m_sliderAge->GetValue();
     
     // 验证
-    if (name.IsEmpty()) {
-        wxMessageBox("请输入姓名！", "错误", wxOK | wxICON_ERROR);
+    if (name.IsEmpty()) 
+    {
+        wxMessageBox("Please enter name!", "Error", wxOK | wxICON_ERROR);
         return;
     }
     
     // 显示结果
     wxString message;
-    message << "姓名: " << name << "\n";
-    message << "年龄: " << age << "\n";
-    message << "性别: " << gender << "\n";
-    message << "城市: " << city << "\n";
-    message << "订阅: " << (subscribe ? "是" : "否") << "\n";
+    message << "Name: " << name << "\n";
+    message << "Age: " << age << "\n";
+    message << "Gender: " << gender << "\n";
+    message << "City: " << city << "\n";
+    message << "Subscribe: " << (subscribe ? "Yes" : "No") << "\n";
     
     if (!bio.IsEmpty()) {
-        message << "\n个人简介:\n" << bio;
+        message << "\nBio:\n" << bio;
     }
     
-    wxMessageBox(message, "表单数据", wxOK | wxICON_INFORMATION);
-    SetStatusText("表单已提交");
+    wxMessageBox(message, "Form Data", wxOK | wxICON_INFORMATION);
+    SetStatusText("Form submitted");
 }
 
 wxIMPLEMENT_APP(MyApp);
