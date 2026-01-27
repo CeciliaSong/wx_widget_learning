@@ -1,0 +1,16 @@
+.vscode/
+*.swp
+*.db
+*.db-shm
+/build/
+/install/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+CTestTestfile.cmake
+CTestCustom.cmake
+colcon_*.txt
+colcon_command_prefix_build.*
+colcon_build.rc
+.vscode
