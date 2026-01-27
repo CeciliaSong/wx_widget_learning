@@ -1,24 +1,7 @@
-/*
- * wxWidgets 第一个程序 - Hello World
- * 
- * 这个程序展示了 wxWidgets 应用的基本结构：
- * 1. 创建应用程序类（继承 wxApp）
- * 2. 创建主窗口类（继承 wxFrame）
- * 3. 使用 wxIMPLEMENT_APP 宏启动应用
- * 
- * 编译命令：
- * g++ -o hello_world hello_world.cpp `wx-config --cxxflags --libs`
- * 
- * 运行：
- * ./hello_world
- */
-
 #include <wx/wx.h>
 
-// ============================================
-// 应用程序类
-// ============================================
-class MyApp : public wxApp {
+class MyApp : public wxApp 
+{
 public:
     virtual bool OnInit();
 };
@@ -60,7 +43,7 @@ enum {
 };
 
 MyFrame::MyFrame()
-    : wxFrame(NULL, wxID_ANY, "Hello World - wxWidgets 第一个程序") {
+    : wxFrame(NULL, wxID_ANY, "Hello World - wxWidgets First Program") {
     
     // 设置窗口大小
     SetSize(wxSize(450, 350));
@@ -71,24 +54,24 @@ MyFrame::MyFrame()
     // ----- 创建菜单栏 -----
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(ID_HELLO, "&Hello...\tCtrl-H",
-                    "显示问候消息");
+                    "Show greeting message");
     menuFile->AppendSeparator();  // 分隔线
-    menuFile->Append(wxID_EXIT, "退出(&X)\tAlt-F4",
-                    "退出应用程序");
+    menuFile->Append(wxID_EXIT, "E&xit\tAlt-F4",
+                    "Quit this application");
     
     wxMenu* menuHelp = new wxMenu;
-    menuHelp->Append(wxID_ABOUT, "关于(&A)\tF1",
-                    "关于这个程序");
+    menuHelp->Append(wxID_ABOUT, "&About\tF1",
+                    "About this program");
     
     wxMenuBar* menuBar = new wxMenuBar;
-    menuBar->Append(menuFile, "文件(&F)");
-    menuBar->Append(menuHelp, "帮助(&H)");
+    menuBar->Append(menuFile, "&File");
+    menuBar->Append(menuHelp, "&Help");
     
     SetMenuBar(menuBar);
     
     // ----- 创建状态栏 -----
     CreateStatusBar();
-    SetStatusText("欢迎使用 wxWidgets！");
+    SetStatusText("Welcome to wxWidgets!");
     
     // ----- 绑定事件 -----
     Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_HELLO);
@@ -97,8 +80,8 @@ MyFrame::MyFrame()
 }
 
 void MyFrame::OnHello(wxCommandEvent& event) {
-    wxMessageBox("这是一个 wxWidgets Hello World 示例！\n\n"
-                "恭喜你成功运行了第一个 wxWidgets 程序。",
+    wxMessageBox("This is a wxWidgets Hello World example!\n\n"
+                "Congratulations on running your first wxWidgets program.",
                 "Hello",
                 wxOK | wxICON_INFORMATION);
 }
@@ -109,11 +92,15 @@ void MyFrame::OnExit(wxCommandEvent& event) {
 }
 
 void MyFrame::OnAbout(wxCommandEvent& event) {
-    wxMessageBox("这是一个使用 wxWidgets 跨平台 GUI 框架编写的程序。\n\n"
-                "wxWidgets 版本: " + wxVERSION_STRING + "\n"
-                "平台: " + wxPlatformInfo::Get().GetOperatingSystemIdName(),
-                "关于 Hello World",
-                wxOK | wxICON_INFORMATION);
+    wxString message = wxString::Format(
+        "This is a program written with wxWidgets cross-platform GUI framework.\n\n"
+        "wxWidgets version: %s\n"
+        "Platform: %s",
+        wxVERSION_STRING,
+        wxPlatformInfo::Get().GetOperatingSystemIdName()
+    );
+    
+    wxMessageBox(message, "About Hello World", wxOK | wxICON_INFORMATION);
 }
 
 // ============================================
