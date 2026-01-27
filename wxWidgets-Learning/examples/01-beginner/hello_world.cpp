@@ -21,6 +21,7 @@ private:
 bool MyApp::OnInit() 
 {
     MyFrame* frame = new MyFrame();
+    frame->CentreOnScreen(wxBOTH);
     frame->Show(true);
     return true;
 }
@@ -34,8 +35,9 @@ MyFrame::MyFrame()
     : wxFrame(NULL, wxID_ANY, "Hello World - wxWidgets First Program") 
     {
     
+    CentreOnScreen(wxBOTH);
     SetSize(wxSize(450, 350));
-    Centre();
+    
     
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(ID_HELLO, "&Hello...\tCtrl-H",
