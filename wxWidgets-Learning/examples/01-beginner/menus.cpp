@@ -11,19 +11,21 @@
 #include <wx/wx.h>
 #include <wx/artprov.h>
 
-class MyApp : public wxApp {
+class MyApp : public wxApp 
+{
 public:
     virtual bool OnInit();
 };
 
-class MyFrame : public wxFrame {
+class MyFrame : public wxFrame 
+{
 public:
     MyFrame();
 
 private:
     wxTextCtrl* m_textCtrl;
-    
-    enum {
+    enum 
+    {
         ID_NEW = wxID_HIGHEST + 1,
         ID_BOLD,
         ID_ITALIC,
