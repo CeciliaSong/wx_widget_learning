@@ -1,0 +1,11 @@
+Welcome to the simple text editor!
+
+File operations:
+- New (Ctrl-N)
+- Open (Ctrl-O)
+- Save (Ctrl-S)
+
+Format settings:
+- Bold (Ctrl-B)
+- Italic (Ctrl-I)
+- Underline (Ctrl-U)

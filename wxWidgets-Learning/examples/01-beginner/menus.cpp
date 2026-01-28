@@ -1,6 +1,5 @@
 #include <wx/wx.h>
 #include <wx/artprov.h>
-#include <wx/file.h>    // 添加这行
 
 class MyApp : public wxApp 
 {
@@ -137,36 +136,14 @@ void MyFrame::OnOpen(wxCommandEvent& event)
     }
     
     wxString filename = openFileDialog.GetPath();
-    
-    // 使用 wxFile 读取整个文件
-    wxFile file(filename, wxFile::read);
-    if (file.IsOpened()) {
-        // 获取文件大小
-        wxFileOffset fileSize = file.Length();
-        
-        if (fileSize > 0) {
-            // 创建足够大的缓冲区
-            char* buffer = new char[fileSize + 1];
-            size_t read = file.Read(buffer, fileSize);
-            buffer[read] = '\0';
-            
-            // 转换为 wxString
-            wxString content(buffer, wxConvUTF8);
-            m_textCtrl->SetValue(content);
-            
-            delete[] buffer;
-            SetStatusText("Opened: " + filename);
-        }
-        file.Close();
-    } else {
-        wxMessageBox("Failed to open file!", "Error", wxOK | wxICON_ERROR);
-    }
+    m_textCtrl->LoadFile(filename);
+    SetStatusText("Opened: " + filename);
 }
 
 void MyFrame::OnSave(wxCommandEvent& event) 
 {
-    wxFileDialog saveFileDialog(this, "Save File", "", "",
-                               "Text files (*.txt)|*.txt",
+    wxFileDialog saveFileDialog(this, "Save File", "", "untitled.txt",
+                               "Text files (*.txt)|*.txt|All files (*.*)|*.*",
                                wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     
     if (saveFileDialog.ShowModal() == wxID_CANCEL) 
@@ -176,15 +153,14 @@ void MyFrame::OnSave(wxCommandEvent& event)
     
     wxString filename = saveFileDialog.GetPath();
     
-    // 手动保存为纯文本
-    wxFile file(filename, wxFile::write);
-    if (file.IsOpened()) {
-        file.Write(m_textCtrl->GetValue());
-        file.Close();
-        SetStatusText("Saved: " + filename);
-    } else {
-        wxMessageBox("Failed to save file!", "Error", wxOK | wxICON_ERROR);
+    // 确保有 .txt 扩展名
+    if (!filename.EndsWith(".txt")) 
+    {
+        filename += ".txt";
     }
+    
+    m_textCtrl->SaveFile(filename);
+    SetStatusText("Saved: " + filename);
 }
 
 void MyFrame::OnExit(wxCommandEvent& event) 
