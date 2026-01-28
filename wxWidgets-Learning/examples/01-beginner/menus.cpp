@@ -1,5 +1,6 @@
 #include <wx/wx.h>
 #include <wx/artprov.h>
+#include <wx/file.h>    // 添加这行
 
 class MyApp : public wxApp 
 {
@@ -88,7 +89,7 @@ MyFrame::MyFrame()
     
     m_textCtrl = new wxTextCtrl(this, wxID_ANY, "",
                                wxDefaultPosition, wxDefaultSize,
-                               wxTE_MULTILINE | wxTE_RICH2);
+                               wxTE_MULTILINE);
     
     m_textCtrl->SetValue("Welcome to the simple text editor!\n\n"
                         "File operations:\n"
@@ -136,8 +137,30 @@ void MyFrame::OnOpen(wxCommandEvent& event)
     }
     
     wxString filename = openFileDialog.GetPath();
-    m_textCtrl->LoadFile(filename);
-    SetStatusText("Opened: " + filename);
+    
+    // 使用 wxFile 读取整个文件
+    wxFile file(filename, wxFile::read);
+    if (file.IsOpened()) {
+        // 获取文件大小
+        wxFileOffset fileSize = file.Length();
+        
+        if (fileSize > 0) {
+            // 创建足够大的缓冲区
+            char* buffer = new char[fileSize + 1];
+            size_t read = file.Read(buffer, fileSize);
+            buffer[read] = '\0';
+            
+            // 转换为 wxString
+            wxString content(buffer, wxConvUTF8);
+            m_textCtrl->SetValue(content);
+            
+            delete[] buffer;
+            SetStatusText("Opened: " + filename);
+        }
+        file.Close();
+    } else {
+        wxMessageBox("Failed to open file!", "Error", wxOK | wxICON_ERROR);
+    }
 }
 
 void MyFrame::OnSave(wxCommandEvent& event) 
@@ -152,8 +175,16 @@ void MyFrame::OnSave(wxCommandEvent& event)
     }
     
     wxString filename = saveFileDialog.GetPath();
-    m_textCtrl->SaveFile(filename);
-    SetStatusText("Saved: " + filename);
+    
+    // 手动保存为纯文本
+    wxFile file(filename, wxFile::write);
+    if (file.IsOpened()) {
+        file.Write(m_textCtrl->GetValue());
+        file.Close();
+        SetStatusText("Saved: " + filename);
+    } else {
+        wxMessageBox("Failed to save file!", "Error", wxOK | wxICON_ERROR);
+    }
 }
 
 void MyFrame::OnExit(wxCommandEvent& event) 
