@@ -1,13 +1,3 @@
-/*
- * wxWidgets 菜单和工具栏示例（简化版）
- * 
- * 展示：
- * - 基本文件操作（新建、打开、保存）
- * - 基本格式设置（粗体、斜体、下划线）
- * 
- * 编译：g++ -o menus menus.cpp `wx-config --cxxflags --libs`
- */
-
 #include <wx/wx.h>
 #include <wx/artprov.h>
 
@@ -51,11 +41,9 @@ bool MyApp::OnInit() {
 }
 
 MyFrame::MyFrame()
-    : wxFrame(NULL, wxID_ANY, "Simple Text Editor", wxDefaultPosition, wxSize(700, 500)) {
+    : wxFrame(NULL, wxID_ANY, "Simple Text Editor", wxDefaultPosition, wxSize(700, 500)) 
+    {
     
-    // ==================== 创建菜单栏 ====================
-    
-    // 文件菜单
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(ID_NEW, "&New\tCtrl-N", "Create new document");
     menuFile->Append(wxID_OPEN, "&Open\tCtrl-O", "Open file");
@@ -63,17 +51,15 @@ MyFrame::MyFrame()
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT, "E&xit\tAlt-F4", "Quit program");
     
-    // 格式菜单
+    
     wxMenu* menuFormat = new wxMenu;
     menuFormat->AppendCheckItem(ID_BOLD, "&Bold\tCtrl-B", "Set bold");
     menuFormat->AppendCheckItem(ID_ITALIC, "&Italic\tCtrl-I", "Set italic");
     menuFormat->AppendCheckItem(ID_UNDERLINE, "&Underline\tCtrl-U", "Set underline");
     
-    // 帮助菜单
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT, "&About", "About this program");
     
-    // 创建菜单栏
     wxMenuBar* menuBar = new wxMenuBar;
     menuBar->Append(menuFile, "&File");
     menuBar->Append(menuFormat, "F&ormat");
@@ -81,7 +67,6 @@ MyFrame::MyFrame()
     
     SetMenuBar(menuBar);
     
-    // ==================== 创建工具栏 ====================
     wxToolBar* toolBar = CreateToolBar();
     
     toolBar->AddTool(ID_NEW, "New",
@@ -98,11 +83,9 @@ MyFrame::MyFrame()
     
     toolBar->Realize();
     
-    // ==================== 创建状态栏 ====================
     CreateStatusBar();
     SetStatusText("Ready");
     
-    // ==================== 创建文本编辑器 ====================
     m_textCtrl = new wxTextCtrl(this, wxID_ANY, "",
                                wxDefaultPosition, wxDefaultSize,
                                wxTE_MULTILINE | wxTE_RICH2);
@@ -117,7 +100,6 @@ MyFrame::MyFrame()
                         "- Italic (Ctrl-I)\n"
                         "- Underline (Ctrl-U)");
     
-    // ==================== 绑定事件 ====================
     Bind(wxEVT_MENU, &MyFrame::OnNew, this, ID_NEW);
     Bind(wxEVT_MENU, &MyFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MyFrame::OnSave, this, wxID_SAVE);
@@ -132,20 +114,24 @@ MyFrame::MyFrame()
     Centre();
 }
 
-void MyFrame::OnNew(wxCommandEvent& event) {
+void MyFrame::OnNew(wxCommandEvent& event) 
+{
     if (wxMessageBox("Current content will be cleared. Continue?", "Confirm",
-                    wxYES_NO | wxICON_QUESTION) == wxYES) {
+                    wxYES_NO | wxICON_QUESTION) == wxYES) 
+    {
         m_textCtrl->Clear();
         SetStatusText("New document");
     }
 }
 
-void MyFrame::OnOpen(wxCommandEvent& event) {
+void MyFrame::OnOpen(wxCommandEvent& event) 
+{
     wxFileDialog openFileDialog(this, "Open File", "", "",
                                "Text files (*.txt)|*.txt|All files (*.*)|*.*",
                                wxFD_OPEN | wxFD_FILE_MUST_EXIST);
     
-    if (openFileDialog.ShowModal() == wxID_CANCEL) {
+    if (openFileDialog.ShowModal() == wxID_CANCEL) 
+    {
         return;
     }
     
@@ -154,12 +140,14 @@ void MyFrame::OnOpen(wxCommandEvent& event) {
     SetStatusText("Opened: " + filename);
 }
 
-void MyFrame::OnSave(wxCommandEvent& event) {
+void MyFrame::OnSave(wxCommandEvent& event) 
+{
     wxFileDialog saveFileDialog(this, "Save File", "", "",
                                "Text files (*.txt)|*.txt",
                                wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     
-    if (saveFileDialog.ShowModal() == wxID_CANCEL) {
+    if (saveFileDialog.ShowModal() == wxID_CANCEL) 
+    {
         return;
     }
     
@@ -168,11 +156,13 @@ void MyFrame::OnSave(wxCommandEvent& event) {
     SetStatusText("Saved: " + filename);
 }
 
-void MyFrame::OnExit(wxCommandEvent& event) {
+void MyFrame::OnExit(wxCommandEvent& event) 
+{
     Close(true);
 }
 
-void MyFrame::OnBold(wxCommandEvent& event) {
+void MyFrame::OnBold(wxCommandEvent& event) 
+{
     wxTextAttr attr;
     attr.SetFontWeight(event.IsChecked() ? wxFONTWEIGHT_BOLD : wxFONTWEIGHT_NORMAL);
     
@@ -183,7 +173,8 @@ void MyFrame::OnBold(wxCommandEvent& event) {
     SetStatusText(event.IsChecked() ? "Bold set" : "Bold cleared");
 }
 
-void MyFrame::OnItalic(wxCommandEvent& event) {
+void MyFrame::OnItalic(wxCommandEvent& event) 
+{
     wxTextAttr attr;
     attr.SetFontStyle(event.IsChecked() ? wxFONTSTYLE_ITALIC : wxFONTSTYLE_NORMAL);
     
@@ -194,7 +185,8 @@ void MyFrame::OnItalic(wxCommandEvent& event) {
     SetStatusText(event.IsChecked() ? "Italic set" : "Italic cleared");
 }
 
-void MyFrame::OnUnderline(wxCommandEvent& event) {
+void MyFrame::OnUnderline(wxCommandEvent& event) 
+{
     wxTextAttr attr;
     attr.SetFontUnderlined(event.IsChecked());
     
@@ -205,7 +197,8 @@ void MyFrame::OnUnderline(wxCommandEvent& event) {
     SetStatusText(event.IsChecked() ? "Underline set" : "Underline cleared");
 }
 
-void MyFrame::OnAbout(wxCommandEvent& event) {
+void MyFrame::OnAbout(wxCommandEvent& event) 
+{
     wxMessageBox("Simple Text Editor\n\n"
                 "A basic text editor with file operations and text formatting.",
                 "About",

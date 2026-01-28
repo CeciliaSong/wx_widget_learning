@@ -13,7 +13,7 @@
 #include <wx/colordlg.h>
 #include <wx/fontdlg.h>
 
-// 自定义对话框
+// Custom dialog
 class CustomDialog : public wxDialog {
 public:
     CustomDialog(wxWindow* parent);
@@ -44,7 +44,7 @@ private:
     wxPanel* m_colorPanel;
     wxStaticText* m_fontLabel;
     
-    // 事件处理器
+    // Event handlers
     void OnMessageBox(wxCommandEvent& event);
     void OnFileOpen(wxCommandEvent& event);
     void OnFileSave(wxCommandEvent& event);
@@ -66,38 +66,38 @@ private:
     };
 };
 
-// ==================== CustomDialog 实现 ====================
+// ==================== CustomDialog Implementation ====================
 
 CustomDialog::CustomDialog(wxWindow* parent)
-    : wxDialog(parent, wxID_ANY, "自定义对话框", wxDefaultPosition, wxSize(400, 200)) {
+    : wxDialog(parent, wxID_ANY, "Custom Dialog", wxDefaultPosition, wxSize(400, 200)) {
     
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     
-    // 表单布局
+    // Form layout
     wxFlexGridSizer* formSizer = new wxFlexGridSizer(2, 10, 10);
     formSizer->AddGrowableCol(1, 1);
     
-    // 姓名
-    formSizer->Add(new wxStaticText(this, wxID_ANY, "姓名:"),
+    // Name
+    formSizer->Add(new wxStaticText(this, wxID_ANY, "Name:"),
                   0, wxALIGN_CENTER_VERTICAL);
     m_textName = new wxTextCtrl(this, wxID_ANY);
     formSizer->Add(m_textName, 1, wxEXPAND);
     
-    // 邮箱
-    formSizer->Add(new wxStaticText(this, wxID_ANY, "邮箱:"),
+    // Email
+    formSizer->Add(new wxStaticText(this, wxID_ANY, "Email:"),
                   0, wxALIGN_CENTER_VERTICAL);
     m_textEmail = new wxTextCtrl(this, wxID_ANY);
     formSizer->Add(m_textEmail, 1, wxEXPAND);
     
     mainSizer->Add(formSizer, 1, wxEXPAND | wxALL, 10);
     
-    // 按钮
+    // Buttons
     wxSizer* buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     mainSizer->Add(buttonSizer, 0, wxEXPAND | wxALL, 10);
     
     SetSizer(mainSizer);
     
-    // 绑定确定按钮
+    // Bind OK button
     Bind(wxEVT_BUTTON, &CustomDialog::OnOK, this, wxID_OK);
     
     Centre();
@@ -107,22 +107,22 @@ void CustomDialog::OnOK(wxCommandEvent& event) {
     m_name = m_textName->GetValue();
     m_email = m_textEmail->GetValue();
     
-    // 验证
+    // Validation
     if (m_name.IsEmpty()) {
-        wxMessageBox("请输入姓名！", "错误", wxOK | wxICON_ERROR, this);
+        wxMessageBox("Please enter name!", "Error", wxOK | wxICON_ERROR, this);
         return;
     }
     
     if (m_email.IsEmpty() || !m_email.Contains("@")) {
-        wxMessageBox("请输入有效的邮箱地址！", "错误", wxOK | wxICON_ERROR, this);
+        wxMessageBox("Please enter valid email address!", "Error", wxOK | wxICON_ERROR, this);
         return;
     }
     
-    // 验证通过，关闭对话框
+    // Validation passed, close dialog
     EndModal(wxID_OK);
 }
 
-// ==================== MyApp 实现 ====================
+// ==================== MyApp Implementation ====================
 
 bool MyApp::OnInit() {
     MyFrame* frame = new MyFrame();
@@ -130,30 +130,30 @@ bool MyApp::OnInit() {
     return true;
 }
 
-// ==================== MyFrame 实现 ====================
+// ==================== MyFrame Implementation ====================
 
 MyFrame::MyFrame()
-    : wxFrame(NULL, wxID_ANY, "对话框示例", wxDefaultPosition, wxSize(600, 500)) {
+    : wxFrame(NULL, wxID_ANY, "Dialog Examples", wxDefaultPosition, wxSize(600, 500)) {
     
     wxPanel* panel = new wxPanel(this);
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     
-    // 标题
+    // Title
     wxStaticText* title = new wxStaticText(panel, wxID_ANY,
-                                          "点击按钮打开不同类型的对话框：");
+                                          "Click buttons to open different types of dialogs:");
     mainSizer->Add(title, 0, wxALL, 10);
     
-    // 按钮网格
+    // Button grid
     wxGridSizer* gridSizer = new wxGridSizer(2, 5, 5);
     
-    wxButton* btnMessage = new wxButton(panel, ID_MESSAGE_BOX, "消息框");
-    wxButton* btnOpen = new wxButton(panel, ID_FILE_OPEN, "打开文件");
-    wxButton* btnSave = new wxButton(panel, ID_FILE_SAVE, "保存文件");
-    wxButton* btnColor = new wxButton(panel, ID_COLOR, "颜色选择");
-    wxButton* btnFont = new wxButton(panel, ID_FONT, "字体选择");
-    wxButton* btnCustom = new wxButton(panel, ID_CUSTOM, "自定义对话框");
-    wxButton* btnProgress = new wxButton(panel, ID_PROGRESS, "进度对话框");
-    wxButton* btnTextEntry = new wxButton(panel, ID_TEXT_ENTRY, "文本输入");
+    wxButton* btnMessage = new wxButton(panel, ID_MESSAGE_BOX, "Message Box");
+    wxButton* btnOpen = new wxButton(panel, ID_FILE_OPEN, "Open File");
+    wxButton* btnSave = new wxButton(panel, ID_FILE_SAVE, "Save File");
+    wxButton* btnColor = new wxButton(panel, ID_COLOR, "Color Picker");
+    wxButton* btnFont = new wxButton(panel, ID_FONT, "Font Picker");
+    wxButton* btnCustom = new wxButton(panel, ID_CUSTOM, "Custom Dialog");
+    wxButton* btnProgress = new wxButton(panel, ID_PROGRESS, "Progress Dialog");
+    wxButton* btnTextEntry = new wxButton(panel, ID_TEXT_ENTRY, "Text Input");
     
     gridSizer->Add(btnMessage, 0, wxEXPAND);
     gridSizer->Add(btnOpen, 0, wxEXPAND);
@@ -166,32 +166,32 @@ MyFrame::MyFrame()
     
     mainSizer->Add(gridSizer, 0, wxEXPAND | wxALL, 10);
     
-    // 分隔线
+    // Separator
     mainSizer->Add(new wxStaticLine(panel), 0, wxEXPAND | wxALL, 5);
     
-    // 颜色显示面板
+    // Color display panel
     wxBoxSizer* colorSizer = new wxBoxSizer(wxHORIZONTAL);
-    colorSizer->Add(new wxStaticText(panel, wxID_ANY, "选择的颜色:"),
+    colorSizer->Add(new wxStaticText(panel, wxID_ANY, "Selected color:"),
                    0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
     m_colorPanel = new wxPanel(panel, wxID_ANY, wxDefaultPosition, wxSize(100, 30));
     m_colorPanel->SetBackgroundColour(*wxWHITE);
     colorSizer->Add(m_colorPanel, 0);
     mainSizer->Add(colorSizer, 0, wxALL, 10);
     
-    // 字体显示
-    m_fontLabel = new wxStaticText(panel, wxID_ANY, "选择的字体将显示在这里");
+    // Font display
+    m_fontLabel = new wxStaticText(panel, wxID_ANY, "Selected font will be displayed here");
     mainSizer->Add(m_fontLabel, 0, wxALL, 10);
     
-    // 文本区域
+    // Text area
     m_textCtrl = new wxTextCtrl(panel, wxID_ANY, "",
                                wxDefaultPosition, wxDefaultSize,
                                wxTE_MULTILINE | wxTE_READONLY);
-    m_textCtrl->SetValue("对话框操作的结果将显示在这里...\n");
+    m_textCtrl->SetValue("Dialog results will be displayed here...\n");
     mainSizer->Add(m_textCtrl, 1, wxEXPAND | wxALL, 10);
     
     panel->SetSizer(mainSizer);
     
-    // 绑定事件
+    // Bind events
     Bind(wxEVT_BUTTON, &MyFrame::OnMessageBox, this, ID_MESSAGE_BOX);
     Bind(wxEVT_BUTTON, &MyFrame::OnFileOpen, this, ID_FILE_OPEN);
     Bind(wxEVT_BUTTON, &MyFrame::OnFileSave, this, ID_FILE_SAVE);
@@ -205,49 +205,49 @@ MyFrame::MyFrame()
 }
 
 void MyFrame::OnMessageBox(wxCommandEvent& event) {
-    // 不同类型的消息框
+    // Different types of message boxes
     int choice = wxMessageBox(
-        "wxMessageBox 可以显示各种类型的消息。\n\n"
-        "这是一个带图标和按钮的示例。\n"
-        "点击 Yes 查看更多示例，点击 No 返回。",
-        "消息框示例",
+        "wxMessageBox can display various types of messages.\n\n"
+        "This is an example with icons and buttons.\n"
+        "Click Yes for more examples, No to return.",
+        "Message Box Example",
         wxYES_NO | wxICON_QUESTION,
         this
     );
     
     if (choice == wxYES) {
-        // 信息框
-        wxMessageBox("这是一个信息框。", "信息", wxOK | wxICON_INFORMATION, this);
+        // Info box
+        wxMessageBox("This is an info box.", "Info", wxOK | wxICON_INFORMATION, this);
         
-        // 警告框
-        wxMessageBox("这是一个警告框。", "警告", wxOK | wxICON_WARNING, this);
+        // Warning box
+        wxMessageBox("This is a warning box.", "Warning", wxOK | wxICON_WARNING, this);
         
-        // 错误框
-        wxMessageBox("这是一个错误框。", "错误", wxOK | wxICON_ERROR, this);
+        // Error box
+        wxMessageBox("This is an error box.", "Error", wxOK | wxICON_ERROR, this);
     }
     
-    m_textCtrl->AppendText("消息框已显示\n");
+    m_textCtrl->AppendText("Message box displayed\n");
 }
 
 void MyFrame::OnFileOpen(wxCommandEvent& event) {
     wxFileDialog openFileDialog(
         this,
-        "选择文件",
-        "",  // 默认目录
-        "",  // 默认文件名
-        "文本文件 (*.txt)|*.txt|所有文件 (*.*)|*.*",
-        wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE  // 可多选
+        "Select file",
+        "",  // Default directory
+        "",  // Default filename
+        "Text files (*.txt)|*.txt|All files (*.*)|*.*",
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE  // Allow multiple selection
     );
     
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
-        m_textCtrl->AppendText("取消打开文件\n");
+        m_textCtrl->AppendText("Cancelled opening file\n");
         return;
     }
     
     wxArrayString paths;
     openFileDialog.GetPaths(paths);
     
-    m_textCtrl->AppendText("选择的文件:\n");
+    m_textCtrl->AppendText("Selected files:\n");
     for (size_t i = 0; i < paths.GetCount(); i++) {
         m_textCtrl->AppendText("  " + paths[i] + "\n");
     }
@@ -256,20 +256,20 @@ void MyFrame::OnFileOpen(wxCommandEvent& event) {
 void MyFrame::OnFileSave(wxCommandEvent& event) {
     wxFileDialog saveFileDialog(
         this,
-        "保存文件",
+        "Save file",
         "",
         "untitled.txt",
-        "文本文件 (*.txt)|*.txt",
+        "Text files (*.txt)|*.txt",
         wxFD_SAVE | wxFD_OVERWRITE_PROMPT
     );
     
     if (saveFileDialog.ShowModal() == wxID_CANCEL) {
-        m_textCtrl->AppendText("取消保存文件\n");
+        m_textCtrl->AppendText("Cancelled saving file\n");
         return;
     }
     
     wxString path = saveFileDialog.GetPath();
-    m_textCtrl->AppendText("保存到: " + path + "\n");
+    m_textCtrl->AppendText("Saved to: " + path + "\n");
 }
 
 void MyFrame::OnColorDialog(wxCommandEvent& event) {
@@ -284,7 +284,7 @@ void MyFrame::OnColorDialog(wxCommandEvent& event) {
         m_colorPanel->Refresh();
         
         m_textCtrl->AppendText(wxString::Format(
-            "选择的颜色: RGB(%d, %d, %d)\n",
+            "Selected color: RGB(%d, %d, %d)\n",
             color.Red(), color.Green(), color.Blue()
         ));
     }
@@ -301,7 +301,7 @@ void MyFrame::OnFontDialog(wxCommandEvent& event) {
         m_fontLabel->SetFont(font);
         
         m_textCtrl->AppendText(wxString::Format(
-            "选择的字体: %s, 大小: %d\n",
+            "Selected font: %s, size: %d\n",
             font.GetFaceName(), font.GetPointSize()
         ));
     }
@@ -315,51 +315,51 @@ void MyFrame::OnCustomDialog(wxCommandEvent& event) {
         wxString email = dialog.GetEmail();
         
         m_textCtrl->AppendText(wxString::Format(
-            "自定义对话框返回:\n  姓名: %s\n  邮箱: %s\n",
+            "Custom dialog returned:\n  Name: %s\n  Email: %s\n",
             name, email
         ));
     } else {
-        m_textCtrl->AppendText("取消自定义对话框\n");
+        m_textCtrl->AppendText("Cancelled custom dialog\n");
     }
 }
 
 void MyFrame::OnProgressDialog(wxCommandEvent& event) {
     wxProgressDialog dialog(
-        "处理中",
-        "正在处理，请稍候...",
-        100,  // 最大值
+        "Processing",
+        "Processing, please wait...",
+        100,  // Max value
         this,
         wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_CAN_ABORT
     );
     
     for (int i = 0; i <= 100; i++) {
-        wxString message = wxString::Format("处理中... %d%%", i);
+        wxString message = wxString::Format("Processing... %d%%", i);
         
         if (!dialog.Update(i, message)) {
-            m_textCtrl->AppendText("进度对话框被取消\n");
+            m_textCtrl->AppendText("Progress dialog cancelled\n");
             break;
         }
         
-        wxMilliSleep(30);  // 模拟工作
+        wxMilliSleep(30);  // Simulate work
         
         if (i == 100) {
-            m_textCtrl->AppendText("处理完成！\n");
+            m_textCtrl->AppendText("Processing completed!\n");
         }
     }
 }
 
 void MyFrame::OnTextEntry(wxCommandEvent& event) {
     wxString value = wxGetTextFromUser(
-        "请输入你的名字:",
-        "文本输入",
-        "默认值",
+        "Please enter your name:",
+        "Text Input",
+        "Default value",
         this
     );
     
     if (!value.IsEmpty()) {
-        m_textCtrl->AppendText("输入的文本: " + value + "\n");
+        m_textCtrl->AppendText("Entered text: " + value + "\n");
     } else {
-        m_textCtrl->AppendText("取消文本输入\n");
+        m_textCtrl->AppendText("Cancelled text input\n");
     }
 }
 
