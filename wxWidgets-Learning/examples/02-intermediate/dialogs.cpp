@@ -61,7 +61,7 @@ private:
 // ==================== CustomDialog Implementation ====================
 
 CustomDialog::CustomDialog(wxWindow* parent)
-    : wxDialog(parent, wxID_ANY, "Custom Dialog", wxDefaultPosition, wxSize(400, 180)) {
+    : wxDialog(parent, wxID_ANY, "Custom Dialog") {
     
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     
@@ -70,21 +70,20 @@ CustomDialog::CustomDialog(wxWindow* parent)
     
     formSizer->Add(new wxStaticText(this, wxID_ANY, "Name:"),
                   0, wxALIGN_CENTER_VERTICAL);
-    m_textName = new wxTextCtrl(this, wxID_ANY);
+    m_textName = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(280, -1));
     formSizer->Add(m_textName, 1, wxEXPAND);
     
     formSizer->Add(new wxStaticText(this, wxID_ANY, "Email:"),
                   0, wxALIGN_CENTER_VERTICAL);
-    m_textEmail = new wxTextCtrl(this, wxID_ANY);
+    m_textEmail = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(280, -1));
     formSizer->Add(m_textEmail, 1, wxEXPAND);
     
-    mainSizer->Add(formSizer, 1, wxEXPAND | wxALL, 10);
+    mainSizer->Add(formSizer, 0, wxEXPAND | wxALL, 15);
     
     wxSizer* buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
-    mainSizer->Add(buttonSizer, 0, wxEXPAND | wxALL, 10);
+    mainSizer->Add(buttonSizer, 0, wxALIGN_RIGHT | wxALL, 10);
     
-    SetSizer(mainSizer);
-    Bind(wxEVT_BUTTON, &CustomDialog::OnOK, this, wxID_OK);
+    SetSizerAndFit(mainSizer);  // 自动调整大小
     Centre();
 }
 
