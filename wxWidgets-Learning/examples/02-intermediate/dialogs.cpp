@@ -10,8 +10,10 @@
  */
 
 #include <wx/wx.h>
+#include <wx/statline.h>   // 如果需要
 #include <wx/colordlg.h>
 #include <wx/fontdlg.h>
+#include <wx/progdlg.h>
 
 // Custom dialog
 class CustomDialog : public wxDialog {
